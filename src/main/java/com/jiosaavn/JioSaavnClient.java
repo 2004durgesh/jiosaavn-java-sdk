@@ -1,21 +1,25 @@
 package com.jiosaavn;
 
-import com.jiosaavn.models.artists.Artist;
-import com.jiosaavn.services.ArtistService;
-import com.jiosaavn.utils.JsonUtils;
-
 import java.io.IOException;
 import java.util.List;
+
+import com.jiosaavn.models.Playlist;
+import com.jiosaavn.models.Song;
+import com.jiosaavn.models.artists.Artist;
+import com.jiosaavn.services.ArtistService;
+import com.jiosaavn.services.PlaylistService;
+import com.jiosaavn.services.SongService;
+import com.jiosaavn.utils.JsonUtils;
 
 public class JioSaavnClient {
 
     public static void main(String[] args) {
-        ArtistService client = new ArtistService();
+        SongService client = new SongService();
 
         try {
             // Test search
             System.out.println("=== Testing Search ===");
-            Artist.ArtistModel songByLink = client.getArtistById("-h0RbDzaCqA_",1,50,50);
+            Song.SongLyrics songByLink = client.getLyricsById("wcsDiSsA");
             System.out.println(JsonUtils.toJson(songByLink));
 
 

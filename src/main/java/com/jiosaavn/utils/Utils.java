@@ -5,11 +5,15 @@ import com.jiosaavn.models.DownloadLink;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Utils {
     public static List<DownloadLink> createImageLinks(String link) {
@@ -94,5 +98,27 @@ public class Utils {
         }
 
         return downloadUrls;
+    }
+
+    public static <T> List<T> uniqueById(List<T> list) {
+        Set<Object> seenIds = new HashSet<>();
+        List<T> result = new ArrayList<>();
+
+        for (T item : list) {
+            try {
+                Field field = item.getClass().getDeclaredField("id");
+                field.setAccessible(true);
+                Object idValue = field.get(item);
+
+                if (seenIds.add(idValue)) {
+                    result.add(item);
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                // You can choose to log or rethrow this in production
+                System.err.println("Object " + item + " has no accessible 'id' field.");
+            }
+        }
+
+        return result;
     }
 }

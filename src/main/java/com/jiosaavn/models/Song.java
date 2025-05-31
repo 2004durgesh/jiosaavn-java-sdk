@@ -166,6 +166,13 @@ public class Song {
 
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class SongLyrics{
+        @JsonProperty("lyrics")
+        public String lyrics;
 
+        @JsonProperty("snippet")
+        public String snippet;
+    }
 
 }

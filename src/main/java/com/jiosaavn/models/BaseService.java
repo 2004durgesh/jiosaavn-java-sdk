@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jiosaavn.constants.UserAgents;
 import com.jiosaavn.models.artists.Artist;
+import com.jiosaavn.models.artists.ArtistMap;
 import com.jiosaavn.utils.JsonUtils;
 import com.jiosaavn.utils.Utils;
 import okhttp3.*;
@@ -170,6 +171,17 @@ public class BaseService {
         return model;
     }
 
+    protected ArtistMap.ArtistMapModel artistMapPlayloadTransformation(Artist.ArtistAPIResponseModel artist){
+        ArtistMap.ArtistMapModel model=new ArtistMap.ArtistMapModel();
+        model.id=artist.id;
+        model.name=artist.name;
+        model.type=artist.type;
+        model.url=artist.perma_url;
+        model.image=Utils.createImageLinks(artist.image);
+
+        return model;
+    }
+
     protected Search.SearchModel searchArrayTransformation(Search.SearchAPIResponseModel search) {
         Search.SearchModel model = new Search.SearchModel();
         System.out.println("---------------" + search);
@@ -322,7 +334,12 @@ public class BaseService {
 
         model.language = song.language;
         model.hasLyrics = Boolean.parseBoolean(song.moreInfo.hasLyrics);
+        if(song.moreInfo.lyricsId!=null && !song.moreInfo.lyricsId.isEmpty()){
         model.lyricsId = song.moreInfo.lyricsId;
+        }
+        else{
+            model.lyricsId= song.id;
+        }
         model.url = song.permaUrl;
         model.copyright = song.moreInfo.copyrightText;
         model.album = new Album.AlbumModel(song.moreInfo.albumId, song.moreInfo.album, song.moreInfo.albumUrl);

@@ -47,4 +47,11 @@ public class SongService extends BaseService {
         }
         return result;
     }
+
+    public Song.SongLyrics getLyricsById(String id)throws IOException{
+        Map<String, String> params = new HashMap<>();
+        params.put("lyrics_id", id);
+        Song.SongLyrics response = fetchFromApi(Endpoints.Songs.LYRICS, params, Song.SongLyrics.class, ApiContext.web6dot0);
+        return response;
+    }
 }
