@@ -42,6 +42,6 @@ public class ArtistService extends BaseService {
         params.put("category", sortBy.name().toLowerCase());
         Artist.ArtistAPIResponseModel response = fetchFromApi(Endpoints.Artists.ID, params, Artist.ArtistAPIResponseModel.class, BaseService.ApiContext.web6dot0);
 
-        return artistArrayTransformation(response);
+        return artistPayloadTransformation(response);
     }
 }

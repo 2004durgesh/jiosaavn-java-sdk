@@ -49,7 +49,8 @@ public class Artist {
         public boolean is_followed;
 
         public String id;
-        public String perma_url;
+        @JsonProperty("perma_url")
+        public String permaUrl;
 
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -59,8 +60,10 @@ public class Artist {
             public String subtitle;
             public String type;
             public String image;
-            public String perma_url;
-            public MoreInfo more_info;
+            @JsonProperty("perma_url")
+            public String permaUrl;
+            @JsonProperty("more_info")
+            public MoreInfo moreInfo;
             public String explicit_content;
             public boolean mini_obj;
             public int numsongs;
@@ -105,7 +108,8 @@ public class Artist {
             public String id;
             public String fb;
             public String bio;
-            public String perma_url;
+            @JsonProperty("perma_url")
+            public String permaUrl;
             public String type;
             public boolean mini_obj;
             public boolean isRadioPresent;

@@ -158,11 +158,29 @@ public class Song {
         public String url;
         public String copyright;
 
-        public Album.AlbumModel album;
-        public SongAPIResponseModel.ArtistMapWrapper artists;
+        public SongModelAlbum album;
+        public SongModelArtist artists;
         public List<DownloadLink> image;
         public List<DownloadLink> downloadUrl;
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class SongModelAlbum{
+            public String id;
+            public String name;
+            public String url;
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class SongModelArtist{
+            @JsonProperty("primary_artists")
+            public List<ArtistMap.ArtistMapModel> primaryArtists;
+
+            @JsonProperty("featured_artists")
+            public List<ArtistMap.ArtistMapModel> featuredArtists;
+
+            @JsonProperty("artists")
+            public List<ArtistMap.ArtistMapModel> all;
+        }
 
     }
 

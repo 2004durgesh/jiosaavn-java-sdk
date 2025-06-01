@@ -41,7 +41,7 @@ public class Album {
         public String listType;
 
         @JsonProperty("list")
-        public Object list;
+        public List<Song.SongAPIResponseModel> list;
 
         @JsonProperty("more_info")
         public MoreInfo moreInfo;
@@ -69,11 +69,6 @@ public class Album {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class AlbumModel {
-        public AlbumModel(String id, String name, String url) {
-            this.id = id;
-            this.name = name;
-            this.url = url;
-        }
 
         public String id;
         public String name;
@@ -83,7 +78,7 @@ public class Album {
         public Integer playCount;
         public String language;
         public boolean explicitContent;
-        public Artist artists;
+        public Song.SongModel.SongModelArtist artists;
         public Integer songCount;
         public String url;
         public List<DownloadLink> image;

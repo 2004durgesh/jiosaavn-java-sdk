@@ -13,14 +13,13 @@ import java.util.regex.*;
 
 public class SongService extends BaseService {
 
-
     public List<Song.SongModel> getSongById(String id) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("pids", id);
         Song.SongResponse response = fetchFromApi(Endpoints.Songs.ID, params, Song.SongResponse.class, ApiContext.web6dot0);
         List<Song.SongModel> result = new ArrayList<>();
         for (Song.SongAPIResponseModel song : response.songs) {
-            result.add(songArrayTransformation(song));
+            result.add(songPayloadTransformation(song));
         }
         return result;
     }
@@ -43,12 +42,12 @@ public class SongService extends BaseService {
         Song.SongResponse response = fetchFromApi(Endpoints.Songs.LINK, params, Song.SongResponse.class, ApiContext.web6dot0);
         List<Song.SongModel> result = new ArrayList<>();
         for (Song.SongAPIResponseModel song : response.songs) {
-            result.add(songArrayTransformation(song));
+            result.add(songPayloadTransformation(song));
         }
         return result;
     }
 
-    public Song.SongLyrics getLyricsById(String id)throws IOException{
+    public Song.SongLyrics getLyricsById(String id) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("lyrics_id", id);
         Song.SongLyrics response = fetchFromApi(Endpoints.Songs.LYRICS, params, Song.SongLyrics.class, ApiContext.web6dot0);

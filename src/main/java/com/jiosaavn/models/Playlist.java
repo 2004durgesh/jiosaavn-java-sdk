@@ -105,7 +105,7 @@ public class Playlist {
             public String videoCount;
 
             @JsonProperty("artists")
-            public List<Artist.ArtistAPIResponseModel> artists;
+            public List<ArtistMap.ArtistMapAPIResponseModel> artists;
         }
 
     }
