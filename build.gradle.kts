@@ -4,20 +4,15 @@ plugins {
     // id("signing")
 }
 
-group = "io.github.2004durgesh"
+group = "com.github.2004durgesh"
 version = "1.0.0"
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(18))
-    }
+    sourceCompatibility = JavaVersion.VERSION_18
+    targetCompatibility = JavaVersion.VERSION_18
 
     withSourcesJar()
     withJavadocJar()
-}
-
-repositories {
-    mavenCentral() // This is for resolving your project's dependencies
 }
 
 dependencies {
@@ -37,14 +32,12 @@ tasks.test {
     useJUnitPlatform()
 }
 
-// Keep the publishing block, but simplify the repository part
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
 
-            // These details should match your group and artifact IDs for JitPack
-            groupId = "io.github.2004durgesh"
+            groupId = "com.github.2004durgesh"
             artifactId = "jiosaavn-java-sdk"
             version = "1.0.0"
 
