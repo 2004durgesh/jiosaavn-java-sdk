@@ -8,8 +8,8 @@ This library provides a convenient way to access JioSaavn's data, such as inform
 
 ## Features
 
-- **Comprehensive API Coverage**: Fetch details for songs, albums, artists, and playlists using dedicated services like [`ArtistService`](./src/main/java/com/jiosaavn/services/ArtistService.java), [`AlbumService`](./src/main/java/com/jiosaavn/services/AlbumService.java), [`SongService`](./src/main/java/com/jiosaavn/services/SongService.java), and `PlaylistService`.
-- **Powerful Search**: Search for various content types on JioSaavn via the `SearchService`.
+- **Comprehensive API Coverage**: Fetch details for songs, albums, artists, and playlists using dedicated services like [`ArtistService`](./src/main/java/com/jiosaavn/services/ArtistService.java), [`AlbumService`](./src/main/java/com/jiosaavn/services/AlbumService.java), [`SongService`](./src/main/java/com/jiosaavn/services/SongService.java), and [`PlaylistService`](./src/main/java/com/jiosaavn/services/PlaylistService.java).
+- **Powerful Search**: Search for various content types on JioSaavn via the [`SearchService`](./src/main/java/com/jiosaavn/services/SearchService.java).
 - **Structured Data Models**: Parses API responses into well-defined Java objects (POJOs) for easy access and manipulation. These models are primarily located in the `com.jiosaavn.models` package (e.g., [`Song.SongModel`](./src/main/java/com/jiosaavn/models/Song.java), [`Album.AlbumModel`](./src/main/java/com/jiosaavn/models/Album.java), [`Artist.ArtistModel`](./src/main/java/com/jiosaavn/models/artists/Artist.java)).
 - **Utility Functions**: Includes helper methods in [`Utils`](./src/main/java/com/jiosaavn/utils/Utils.java) for common tasks, such as generating image links of various qualities ([`Utils.createImageLinks`](./src/main/java/com/jiosaavn/utils/Utils.java)) and creating download URLs ([`Utils.createDownloadUrl`](./src/main/java/com/jiosaavn/utils/Utils.java)).
 - **Robust API Interaction**:
@@ -46,34 +46,25 @@ The main entry point for using the client is the `com.jiosaavn.JioSaavnClient` c
 Here's a basic example of how to use the client (assuming you have a method to fetch artist details):
 
 ```java
-package com.jiosaavn;
-
-import com.jiosaavn.models.artists.Artist;
-import com.jiosaavn.services.ArtistService;
+import com.jiosaavn.JioSaavnClient;
+import com.jiosaavn.models.Album;
 import com.jiosaavn.utils.JsonUtils;
 
 import java.io.IOException;
 
-public class JioSaavnClientApp {
+public class Test {
+  public static void main(String[] args) {
+    JioSaavnClient client = new JioSaavnClient();
 
-    public static void main(String[] args) {
-        ArtistService artistService = new ArtistService();
-
-        try {
-            // Example: Get artist details by ID
-            // Replace "-h0RbDzaCqA_" with an actual artist ID and adjust parameters as needed
-            Artist.ArtistModel artistDetails = artistService.getArtistById("-h0RbDzaCqA_", 1, 50, 50);
-            System.out.println("Artist Details:");
-            System.out.println(JsonUtils.toJson(artistDetails));
-
-            // Add more examples for other services like SongService, AlbumService, etc.
-
-        } catch (IOException e) {
-            System.err.println("An error occurred: " + e.getMessage());
-            e.printStackTrace();
-        }
+    try {
+      Album.AlbumModel album = client.albumService.getAlbumById("23241654");
+      System.out.println(JsonUtils.toJson(album));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
+  }
 }
+
 ```
 
 ### Available Services
