@@ -3,19 +3,25 @@ package com.jiosaavn.services;
 import com.jiosaavn.constants.Endpoints;
 import com.jiosaavn.models.Album;
 import com.jiosaavn.models.BaseService;
-import com.jiosaavn.models.Playlist;
-import com.jiosaavn.models.Song;
-import com.jiosaavn.utils.Utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+/**
+ * Service class for interacting with JioSaavn album-related APIs.
+ * This class extends {@link BaseService} to inherit common API interaction functionalities.
+ */
 public class AlbumService extends BaseService {
 
 
+    /**
+     * Retrieves details of an album by its ID.
+     *
+     * @param id The unique identifier of the album.
+     * @return An {@link Album.AlbumModel} object containing the album's details.
+     * @throws IOException If an I/O error occurs during the API call.
+     */
     public Album.AlbumModel getAlbumById(String id) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("albumid", id);
@@ -23,4 +29,3 @@ public class AlbumService extends BaseService {
         return albumPayloadTransformation(response);
     }
 }
-

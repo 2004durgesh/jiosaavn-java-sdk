@@ -2,6 +2,8 @@ package com.jiosaavn.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jiosaavn.models.artists.Artist;
 import com.jiosaavn.models.artists.ArtistMap;
 
@@ -41,7 +43,7 @@ public class Album {
         public String listType;
 
         @JsonProperty("list")
-        public List<Song.SongAPIResponseModel> list;
+        public JsonNode list;
 
         @JsonProperty("more_info")
         public MoreInfo moreInfo;

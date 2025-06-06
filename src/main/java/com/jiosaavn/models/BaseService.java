@@ -1,6 +1,8 @@
 package com.jiosaavn.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jiosaavn.constants.UserAgents;
 import com.jiosaavn.models.artists.Artist;
@@ -92,7 +94,7 @@ public class BaseService {
         }
     }
 
-    protected Artist.ArtistModel artistPayloadTransformation(Artist.ArtistAPIResponseModel artist) {
+    protected Artist.ArtistModel artistPayloadTransformation(Artist.ArtistAPIResponseModel artist) throws JsonProcessingException {
         Artist.ArtistModel model = new Artist.ArtistModel();
         List<Song.SongModel> topSongList = new ArrayList<>();
         List<Artist.ArtistModel.SimilarArtist> similarList = new ArrayList<>();
@@ -184,7 +186,7 @@ public class BaseService {
         ArtistMap.ArtistMapModel model = new ArtistMap.ArtistMapModel();
         model.id = artist.id;
         model.name = artist.name;
-        model.role= artist.role;
+        model.role = artist.role;
         model.type = artist.type;
         model.url = artist.permaUrl;
         model.image = Utils.createImageLinks(artist.image);
@@ -200,7 +202,9 @@ public class BaseService {
         model.type = song.type;
         model.year = song.year;
         model.releaseDate = song.year;
-        model.duration = Integer.parseInt(song.moreInfo.duration);
+        if (song.moreInfo.duration != null && !song.moreInfo.duration.isEmpty()) {
+            model.duration = Integer.parseInt(song.moreInfo.duration);
+        }
         model.label = song.moreInfo.label;
         model.explicitContent = Boolean.parseBoolean(song.explicitContent);
         if (song.playCount != null && !song.playCount.trim().isEmpty()) {
@@ -415,7 +419,7 @@ public class BaseService {
         return result;
     }
 
-    protected Album.AlbumModel albumPayloadTransformation(Album.AlbumAPIResponseModel album) {
+    protected Album.AlbumModel albumPayloadTransformation(Album.AlbumAPIResponseModel album) throws JsonProcessingException {
         Album.AlbumModel model = new Album.AlbumModel();
         List<Song.SongModel> songs = new ArrayList<>();
         Song.SongModel.SongModelArtist artists = new Song.SongModel.SongModelArtist();
@@ -437,14 +441,16 @@ public class BaseService {
             model.songCount = Integer.parseInt(album.moreInfo.songCount);
         }
         model.image = Utils.createImageLinks(album.image);
-        if (album.list != null && !album.list.isEmpty()) {
-            for (Song.SongAPIResponseModel song : album.list) {
+        if (album.list != null && album.list.isArray()) {
+            for (JsonNode songNode : album.list) {
+                Song.SongAPIResponseModel song = objectMapper.treeToValue(songNode, Song.SongAPIResponseModel.class);
                 songs.add(songPayloadTransformation(song));
             }
             model.songs = songs;
         } else {
             model.songs = null;
         }
+
         artists.primaryArtists = transformArtists(album.moreInfo.artistMap.primaryArtists);
         artists.featuredArtists = transformArtists(album.moreInfo.artistMap.featuredArtists);
         artists.all = transformArtists(album.moreInfo.artistMap.all);

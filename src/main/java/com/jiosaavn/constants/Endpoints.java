@@ -24,7 +24,7 @@ public class Endpoints {
     }
 
     public static class Artists {
-        public static final String ID = "webapi.get";
+        public static final String ID = "artist.getArtistPageDetails";
         public static final String LINK = "webapi.get";
         public static final String SONGS = "artist.getArtistMoreSong";
         public static final String ALBUMS = "artist.getArtistMoreAlbum";
