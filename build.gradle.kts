@@ -1,7 +1,7 @@
 plugins {
     id("java-library")
     id("maven-publish")
-    // id("signing")
+    id ("com.diffplug.spotless") version "6.25.0"
 }
 
 group = "com.github.2004durgesh"
@@ -13,6 +13,13 @@ java {
 
     withSourcesJar()
     withJavadocJar()
+}
+
+spotless {
+    java {
+        googleJavaFormat() // or any version
+        target ("src/**/*.java")
+    }
 }
 
 dependencies {
